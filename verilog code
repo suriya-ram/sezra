@@ -1,0 +1,67 @@
+module 
+minip(CLK,CLR,PIR_SENSOR_1,PIR_SENSOR_2,RELAY_A,RELA
+Y_B,OV_Enable,OV1,OV2);
+output RELAY_A, RELAY_B;
+input 
+CLK,CLR,PIR_SENSOR_1,PIR_SENSOR_2,OV_Enable,OV1,OV2;
+reg kktemp1,kktemp2;
+always@(posedge CLK)
+ begin
+// SENSOR SWITCH
+ if(OV_Enable == 0)
+ begin
+ if (CLR==1'b1)
+ begin
+ kktemp1 <= 1'b0;
+ kktemp2 <= 1'b0;
+ end
+ else if ((PIR_SENSOR_1==1'b1) && (PIR_SENSOR_2==1'b0))
+21
+ begin
+ kktemp1 <= 1'b0;
+ kktemp2 <= 1'b0;
+ end
+ else if ((PIR_SENSOR_1==1'b0) && ( 
+PIR_SENSOR_2==1'b1))
+ begin
+ kktemp1 <= 1'b1;
+ kktemp2 <= 1'b1;
+ end
+ end 
+// MANUAL SWITCH
+ else 
+ begin
+ if(OV1 == 1 )
+ kktemp1 <= 1'b1;
+ else 
+ kktemp1 <= 1'b0;
+ if(OV2 == 1 )
+ kktemp2 <= 1'b1;
+ else 
+ kktemp2 <= 1'b0;
+ end 
+22
+ end
+ assign RELAY_A=kktemp1;
+ assign RELAY_B=kktemp2; 
+endmodule
+Constraint File
+set_property PACKAGE_PIN W5 [get_ports CLK]
+set_property PACKAGE_PIN W15 [get_ports CLR]
+set_property PACKAGE_PIN R18 [get_ports PIR_SENSOR_1]
+set_property PACKAGE_PIN M19 [get_ports PIR_SENSOR_2]
+set_property PACKAGE_PIN V3 [get_ports RELAY_A]
+set_property PACKAGE_PIN V14 [get_ports RELAY_B]
+set_property PACKAGE_PIN W2 [get_ports OV_Enable]
+set_property PACKAGE_PIN T1 [get_ports OV1]
+set_property PACKAGE_PIN U1 [get_ports OV2]
+set_property IOSTANDARD LVCMOS33 [get_ports CLK]
+set_property IOSTANDARD LVCMOS33 [get_ports CLR]
+set_property IOSTANDARD LVCMOS33 [get_ports PIR_SENSOR_1]
+set_property IOSTANDARD LVCMOS33 [get_ports PIR_SENSOR_2]
+set_property IOSTANDARD LVCMOS33 [get_ports RELAY_A]
+set_property IOSTANDARD LVCMOS33 [get_ports RELAY_B]
+set_property IOSTANDARD LVCMOS33 [get_ports OV_Enable]
+23
+set_property IOSTANDARD LVCMOS33 [get_ports OV1]
+set_property IOSTANDARD LVCMOS33 [get_ports OV2]
